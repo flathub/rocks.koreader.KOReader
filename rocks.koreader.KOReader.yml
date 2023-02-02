@@ -1,8 +1,8 @@
 app-id: rocks.koreader.KOReader
 runtime: org.freedesktop.Platform
-runtime-version: "22.08"
+runtime-version: '22.08'
 sdk: org.freedesktop.Sdk
-base-version: "22.08"
+base-version: '22.08'
 command: koreader
 separate-locales: false
 finish-args:
@@ -22,7 +22,8 @@ modules:
       - ar x koreader.deb
       - tar xf data.tar.xz
 
-      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader %u' usr/share/applications/koreader.desktop
+      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
+        %u' usr/share/applications/koreader.desktop
       - install -Dm644 usr/share/applications/koreader.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       - install -Dm644 koreader.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
 
@@ -33,27 +34,25 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2022.11/koreader-2022.11-amd64.deb
-        sha256: 66ac40d18f1606e2ff09cfa23e04637b21526c9e7f6c906f98d72fea90a5a7af
+        url: https://github.com/koreader/koreader/releases/download/v2023.01/koreader-2023.01-amd64.deb
+        sha256: 41b5b6e9d2f6fe079d6b456139b6c96f97ea7ac4f558e2eb4e6c24fee3ff98b9
         dest-filename: koreader.deb
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query:
-            .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
+          url-query: .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
             | .browser_download_url
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2022.11/koreader-2022.11-arm64.deb
-        sha256: 4bf3329cf2b5775055086ed5ae15fd9c177197b0a7a72e865288acff008c1527
+        url: https://github.com/koreader/koreader/releases/download/v2023.01/koreader-2023.01-arm64.deb
+        sha256: e3687a09f507225db631fff7201e421dbf4cf00979d78531034d7d789b758b23
         dest-filename: koreader.deb
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query:
-            .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
+          url-query: .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
             | .browser_download_url
 
       - type: script
@@ -67,7 +66,7 @@ modules:
             exec '/app/koreader/reader.lua' "$@"
 
       - type: file
-        url: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
+        url: https://raw.githubusercontent.com/koreader/koreader/master/platform/appimage/koreader.appdata.xml
         sha256: c4b7ee8cd875f48b1b469123e9eded9e23e824754f0cb60019824ed6de3bad55
         dest-filename: koreader.appdata.xml
         x-checker-data:
@@ -85,7 +84,7 @@ modules:
           pattern: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
 
       - type: archive
-        url: https://github.com/koreader/koreader-fonts/archive/refs/heads/master.zip
+        url: https://codeload.github.com/koreader/koreader-fonts/zip/refs/heads/master
         sha256: d46e089b7b1ced607412f0ef14c5f05d0d968545fa944c335c702cac9f2184c6
         dest: fonts
         x-checker-data:
