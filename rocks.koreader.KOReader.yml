@@ -12,7 +12,9 @@ finish-args:
   - --share=network
   - --socket=x11
   - --talk-name=org.freedesktop.Notifications
-  - --filesystem=host
+  - --filesystem=home:ro
+  - --filesystem=/run/media:ro
+  - --filesystem=/media:ro
   - --env=LD_LIBRARY_PATH=/app/lib
 modules:
   # Build SDL2 with required modules
