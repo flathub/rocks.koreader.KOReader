@@ -12,7 +12,12 @@ finish-args:
   - --socket=x11
   - --talk-name=org.freedesktop.Notifications
   - --filesystem=host
+  - --env=LD_LIBRARY_PATH=/app/lib
 modules:
+  # Build SDL2 with required modules
+  #  reevaluate if this is required on next runtime upgrade
+  - libSDL2.yml
+
   - name: koreader
     buildsystem: simple
     build-commands:
