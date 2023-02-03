@@ -6,7 +6,8 @@ base-version: "22.08"
 command: koreader
 separate-locales: false
 finish-args:
-  - --device=dri
+  # For game controller access
+  - --device=all
   - --share=ipc
   - --share=network
   - --socket=x11
