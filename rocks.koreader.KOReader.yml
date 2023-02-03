@@ -84,7 +84,7 @@ modules:
           pattern: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
 
       - type: file
-        url: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
+        url: https://raw.githubusercontent.com/koreader/koreader/master/resources/koreader.svg
         sha256: b285123a86736a5c317de1e9362c6a84fcebd7075c1f947586541d81f99ef29d
         dest-filename: koreader.svg
         x-checker-data:
