@@ -24,7 +24,7 @@ modules:
     buildsystem: simple
     build-commands:
       - install -Dm755 koreader.sh ${FLATPAK_DEST}/bin/koreader
-      - install -Dm644 koreader.appdata.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+      - install -Dm644 rocks.koreader.KOReader.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
 
       - ar x koreader.deb
       - tar xf data.tar.xz
@@ -76,13 +76,7 @@ modules:
             exec '/app/koreader/reader.lua' "$@"
 
       - type: file
-        url: https://raw.githubusercontent.com/koreader/koreader/master/platform/appimage/koreader.appdata.xml
-        sha256: c4b7ee8cd875f48b1b469123e9eded9e23e824754f0cb60019824ed6de3bad55
-        dest-filename: koreader.appdata.xml
-        x-checker-data:
-          type: rotating-url
-          url: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
-          pattern: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
+        path: rocks.koreader.KOReader.metainfo.xml
 
       - type: file
         url: https://raw.githubusercontent.com/koreader/koreader/master/resources/koreader.svg
