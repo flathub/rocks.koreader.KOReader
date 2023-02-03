@@ -30,7 +30,10 @@ modules:
       - sed -i "s,!/usr/lib/koreader/luajit,!${FLATPAK_DEST}/koreader/luajit,g" usr/lib/koreader/reader.lua
       - mv usr/lib/koreader ${FLATPAK_DEST}/koreader
 
-      - mv fonts ${FLATPAK_DEST}/koreader/fonts
+      - rm -rf ${FLATPAK_DEST}/koreader/fonts
+      - mkdir -p ${FLATPAK_DEST}/koreader/fonts
+      - cp -r fonts/* ${FLATPAK_DEST}/koreader/fonts/
+      - ln -s /run/host/user-fonts ${FLATPAK_DEST}/koreader/fonts/host
     sources:
       - type: file
         only-arches: [x86_64]
@@ -83,11 +86,8 @@ modules:
           url: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
           pattern: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
 
-      - type: archive
-        url: https://codeload.github.com/koreader/koreader-fonts/zip/refs/heads/master
-        sha256: d46e089b7b1ced607412f0ef14c5f05d0d968545fa944c335c702cac9f2184c6
+      - type: git
+        url: https://github.com/koreader/koreader-fonts
+        branch: master
+        commit: 046976988aa33639d60d6ffd25c7a0ff50b72ac0
         dest: fonts
-        x-checker-data:
-          type: rotating-url
-          url: https://github.com/koreader/koreader-fonts/archive/refs/heads/master.zip
-          pattern: https://github.com/koreader/koreader-fonts/archive/refs/heads/master.zip
