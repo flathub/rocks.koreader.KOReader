@@ -24,10 +24,18 @@ modules:
     buildsystem: simple
     build-commands:
       - install -Dm755 koreader.sh ${FLATPAK_DEST}/bin/koreader
-      - install -Dm644 rocks.koreader.KOReader.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
 
       - ar x koreader.deb
       - tar xf data.tar.xz
+      - tar xf control.tar.xz
+
+      # Put the version to the metadata
+      - export VERSION="$(grep -oP '\(?<=Version:\ \).*' control)" && appstream-util
+        modify koreader.appdata.xml releases "<release version=\"${VERSION}\" date=\"`date
+        --iso-8601`\"/>"
+      - sed -i -e "s,<releases>&lt;,<releases><," -e "s,&gt;</releases>,></releases>,"
+        koreader.appdata.xml
+      - install -Dm644 koreader.appdata.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
 
       - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
         %u' usr/share/applications/koreader.desktop
@@ -51,7 +59,8 @@ modules:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query: .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
+          url-query:
+            .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
             | .browser_download_url
       - type: file
         only-arches: [aarch64]
@@ -62,7 +71,8 @@ modules:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query: .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
+          url-query:
+            .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
             | .browser_download_url
 
       - type: script
@@ -76,7 +86,13 @@ modules:
             exec '/app/koreader/reader.lua' "$@"
 
       - type: file
-        path: rocks.koreader.KOReader.metainfo.xml
+        url: https://raw.githubusercontent.com/koreader/koreader/master/platform/appimage/koreader.appdata.xml
+        sha256: 87391e881564ffc1438653f9de8298ae325a9ec54487b5085c832fed6977265c
+        dest-filename: koreader.appdata.xml
+        x-checker-data:
+          type: rotating-url
+          url: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
+          pattern: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
 
       - type: file
         url: https://raw.githubusercontent.com/koreader/koreader/master/resources/koreader.svg
