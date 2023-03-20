@@ -52,27 +52,25 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2023.01/koreader-2023.01-amd64.deb
-        sha256: 41b5b6e9d2f6fe079d6b456139b6c96f97ea7ac4f558e2eb4e6c24fee3ff98b9
+        url: https://github.com/koreader/koreader/releases/download/v2023.03/koreader-2023.03-amd64.deb
+        sha256: 0b3baa2b32dfe88a683d98b276938a2ed328eb9c3de550c24b23b5488ba3193b
         dest-filename: koreader.deb
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query:
-            .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
+          url-query: .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
             | .browser_download_url
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2023.01/koreader-2023.01-arm64.deb
-        sha256: e3687a09f507225db631fff7201e421dbf4cf00979d78531034d7d789b758b23
+        url: https://github.com/koreader/koreader/releases/download/v2023.03/koreader-2023.03-arm64.deb
+        sha256: 4844d6b8c24b01aa0df879c7cdab014d2d50b8a6fdfaf665ea4c8a977c918056
         dest-filename: koreader.deb
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query:
-            .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
+          url-query: .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
             | .browser_download_url
 
       - type: script
