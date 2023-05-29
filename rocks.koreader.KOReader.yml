@@ -61,6 +61,7 @@ modules:
           version-query: .tag_name | sub("^v"; "")
           url-query: .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
             | .browser_download_url
+          is-main-source: true
       - type: file
         only-arches: [aarch64]
         url: https://github.com/koreader/koreader/releases/download/v2023.04/koreader-2023.04-arm64.deb
