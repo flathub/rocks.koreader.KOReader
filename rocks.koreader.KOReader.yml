@@ -52,8 +52,8 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2023.06/koreader-2023.06-amd64.deb
-        sha256: 4d94a7721cd7d609f243a9b366f2c6a30d5cfac53c490119eb2d8b8c6dbccc41
+        url: https://github.com/koreader/koreader/releases/download/v2023.06.1/koreader-2023.06.1-amd64.deb
+        sha256: 44419057fe0f280049a3c8859d4cf8adda6263d247c9c2bbd82c06fc5d842b15
         dest-filename: koreader.deb
         x-checker-data:
           type: json
@@ -64,8 +64,8 @@ modules:
           is-main-source: true
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2023.06/koreader-2023.06-arm64.deb
-        sha256: 48d7b0f9bfe7ffcc25bda978faa4674a2d11b6f9cf01b3401a8ae8d2b4c22da0
+        url: https://github.com/koreader/koreader/releases/download/v2023.06.1/koreader-2023.06.1-arm64.deb
+        sha256: 2838b2f51e6c13bc6f14ed8d1381300ce734f1413aa8a1285c466d5397ff7087
         dest-filename: koreader.deb
         x-checker-data:
           type: json
