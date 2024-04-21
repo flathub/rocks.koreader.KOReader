@@ -104,6 +104,5 @@ modules:
 
       - type: git
         url: https://github.com/koreader/koreader-fonts
-        branch: master
         commit: 046976988aa33639d60d6ffd25c7a0ff50b72ac0
         dest: fonts
