@@ -76,7 +76,7 @@ modules:
         dest-filename: koreader.sh
         commands:
           - |
-            export APPIMAGE=1
+            export KO_MULTIUSER=1
 
             cd /app/koreader
 
