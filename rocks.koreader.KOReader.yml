@@ -13,9 +13,7 @@ finish-args:
   - --socket=wayland
   - --socket=fallback-x11
   - --talk-name=org.freedesktop.Notifications
-  - --filesystem=home:ro
-  - --filesystem=/run/media:ro
-  - --filesystem=/media:ro
+  - --filesystem=host
   - --env=LD_LIBRARY_PATH=/app/lib
 modules:
   - shared-modules/SDL2/SDL2-with-libdecor.json
