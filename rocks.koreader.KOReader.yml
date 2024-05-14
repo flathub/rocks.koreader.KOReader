@@ -14,6 +14,7 @@ finish-args:
   - --socket=fallback-x11
   - --talk-name=org.freedesktop.Notifications
   - --filesystem=host
+  - --filesystem=xdg-run/gvfs
   - --env=LD_LIBRARY_PATH=/app/lib
 modules:
   - shared-modules/SDL2/SDL2-with-libdecor.json
