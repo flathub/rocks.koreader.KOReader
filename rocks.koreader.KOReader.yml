@@ -78,10 +78,15 @@ modules:
         commands:
           - |
             export KO_MULTIUSER=1
-
             cd /app/koreader
+            RETURN_VALUE=85
+            while [ ${RETURN_VALUE} -eq 85 ]; do
+                ./reader.lua "$@"
+                RETURN_VALUE=$?
+                set --
+            done
+            exit ${RETURN_VALUE}
 
-            exec '/app/koreader/reader.lua' "$@"
 
       - type: file
         url: https://raw.githubusercontent.com/koreader/koreader/master/platform/appimage/koreader.appdata.xml
