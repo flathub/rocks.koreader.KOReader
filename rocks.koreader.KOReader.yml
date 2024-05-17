@@ -12,7 +12,6 @@ finish-args:
   - --share=network
   - --socket=wayland
   - --socket=fallback-x11
-  - --talk-name=org.freedesktop.Notifications
   - --filesystem=host
   - --filesystem=xdg-run/gvfs
   - --env=LD_LIBRARY_PATH=/app/lib
