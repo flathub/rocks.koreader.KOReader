@@ -28,12 +28,7 @@ modules:
       - tar xf control.tar.xz
 
       # Put the version to the metadata
-      - export VERSION="$(grep -oP '\(?<=Version:\ \).*' control)" && appstream-util
-        modify koreader.appdata.xml releases "<release version=\"${VERSION}\" date=\"`date
-        --iso-8601`\"/>"
-      - sed -i -e "s,<releases>&lt;,<releases><," -e "s,&gt;</releases>,></releases>,"
-        koreader.appdata.xml
-      - install -Dm644 koreader.appdata.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+        sed -e 's/%%VERSION%%/2024.04/' -e 's/%%DATE%%/2024-04-29/' koreader.appdata.xml >${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
 
       - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
         %u' usr/share/applications/koreader.desktop
