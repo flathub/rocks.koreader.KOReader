@@ -89,7 +89,7 @@ modules:
 
       - type: file
         url: https://raw.githubusercontent.com/koreader/koreader/master/platform/appimage/koreader.appdata.xml
-        sha256: f6f966308814e2db98be24bd078bbf67758384cb721a98660e29a57ca56b5378
+        sha256: 8a16fea2d86808f0210950264225017598ea594c2b784bef37ebfd4c81e9580c
         dest-filename: koreader.appdata.xml
         x-checker-data:
           type: rotating-url
