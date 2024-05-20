@@ -27,8 +27,10 @@ modules:
       - tar xf data.tar.xz
       - tar xf control.tar.xz
 
-      # Put the version to the metadata
-        sed -e 's/%%VERSION%%/2024.04/' -e 's/%%DATE%%/2024-04-29/' koreader.appdata.xml >${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+      # Put the version to the metadata. Ugly hack
+      # remove me when switching to generic linux tar.xz releases
+      - sed -i -e 's/%%VERSION%%/2024.04/' -e 's/%%DATE%%/2024-04-29/' koreader.appdata.xml
+      - install -Dm644 koreader.appdata.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
 
       - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
         %u' usr/share/applications/koreader.desktop
@@ -38,9 +40,11 @@ modules:
       - sed -i "s,!/usr/lib/koreader/luajit,!${FLATPAK_DEST}/koreader/luajit,g" usr/lib/koreader/reader.lua
       - mv usr/lib/koreader ${FLATPAK_DEST}/koreader
 
+      # remove me when switching to generic linux tar.xz releases
       - rm -rf ${FLATPAK_DEST}/koreader/fonts
       - mkdir -p ${FLATPAK_DEST}/koreader/fonts
       - cp -r fonts/* ${FLATPAK_DEST}/koreader/fonts/
+
       - ln -s /run/host/user-fonts ${FLATPAK_DEST}/koreader/fonts/host
     sources:
       - type: file
@@ -100,6 +104,8 @@ modules:
           url: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
           pattern: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
 
+
+      # remove me when switching to generic linux tar.xz releases
       - type: git
         url: https://github.com/koreader/koreader-fonts
         commit: 046976988aa33639d60d6ffd25c7a0ff50b72ac0
