@@ -5,6 +5,7 @@ sdk: org.freedesktop.Sdk
 base-version: '23.08'
 command: koreader
 separate-locales: false
+
 finish-args:
   # For game controller access
   - --device=all
@@ -15,86 +16,47 @@ finish-args:
   - --filesystem=host
   - --filesystem=xdg-run/gvfs
   - --env=LD_LIBRARY_PATH=/app/lib
+
 modules:
   - shared-modules/SDL2/SDL2-with-libdecor.json
 
   - name: koreader
     buildsystem: simple
     build-commands:
+      - tar xf koreader.tar.xz
+      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader %u' usr/share/applications/koreader.desktop
       - install -Dm755 koreader.sh ${FLATPAK_DEST}/bin/koreader
-
-      - ar x koreader.deb
-      - tar xf data.tar.xz
-      - tar xf control.tar.xz
-
-      # Put the version to the metadata
-      - export VERSION="$(grep -oP '\(?<=Version:\ \).*' control)" && appstream-util
-        modify koreader.appdata.xml releases "<release version=\"${VERSION}\" date=\"`date
-        --iso-8601`\"/>"
-      - sed -i -e "s,<releases>&lt;,<releases><," -e "s,&gt;</releases>,></releases>,"
-        koreader.appdata.xml
-      - install -Dm644 koreader.appdata.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
-
-      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
-        %u' usr/share/applications/koreader.desktop
-      - install -Dm644 usr/share/applications/koreader.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       - install -Dm644 koreader.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
-
-      - sed -i "s,!/usr/lib/koreader/luajit,!${FLATPAK_DEST}/koreader/luajit,g" usr/lib/koreader/reader.lua
+      - install -Dm644 share/metainfo/koreader.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
+      - install -Dm644 share/applications/koreader.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
       - mv usr/lib/koreader ${FLATPAK_DEST}/koreader
-
-      - rm -rf ${FLATPAK_DEST}/koreader/fonts
-      - mkdir -p ${FLATPAK_DEST}/koreader/fonts
-      - cp -r fonts/* ${FLATPAK_DEST}/koreader/fonts/
       - ln -s /run/host/user-fonts ${FLATPAK_DEST}/koreader/fonts/host
+
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2024.04/koreader-2024.04-amd64.deb
-        sha256: 86a25164366accf34b2bff016fe39acbbd09a8a00c281d04a5b6f37aee67a4bc
-        dest-filename: koreader.deb
+        url: https://github.com/koreader/koreader/releases/download/v2024.07/koreader-linux-x86_64-v2024.07.tar.xz
+        sha256: b0f0ed8dd48e0adbf3b663f034e08791de8945a7788c97de476accb9648cfab6
+        dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query: .assets[] | select(.name == "koreader-" + $version + "-amd64.deb")
+          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version + ".tar.xz")
             | .browser_download_url
           is-main-source: true
+
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2024.04/koreader-2024.04-arm64.deb
-        sha256: 170c01f6c94a3a2610ddeb9ddad8aaa2feb218dc662227087ba9c5a6c1f6f159
-        dest-filename: koreader.deb
+        url: https://github.com/koreader/koreader/releases/download/v2024.07/koreader-linux-aarch64-v2024.07.tar.xz
+        sha256: 0efde1a99d87daf33fc2dfbcedcaba997db8e3f8cdf48b113a9192aa2463d31b
+        dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name | sub("^v"; "")
-          url-query: .assets[] | select(.name == "koreader-" + $version + "-arm64.deb")
+          url-query: .assets[] | select(.name == "koreader-linux-aarch64-" + $version + ".tar.xz")
             | .browser_download_url
-
-      - type: script
-        dest-filename: koreader.sh
-        commands:
-          - |
-            export KO_MULTIUSER=1
-            cd /app/koreader
-            RETURN_VALUE=85
-            while [ ${RETURN_VALUE} -eq 85 ]; do
-                ./reader.lua "$@"
-                RETURN_VALUE=$?
-                set --
-            done
-            exit ${RETURN_VALUE}
-
-
-      - type: file
-        url: https://raw.githubusercontent.com/koreader/koreader/master/platform/appimage/koreader.appdata.xml
-        sha256: f6f966308814e2db98be24bd078bbf67758384cb721a98660e29a57ca56b5378
-        dest-filename: koreader.appdata.xml
-        x-checker-data:
-          type: rotating-url
-          url: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
-          pattern: https://github.com/koreader/koreader/raw/master/platform/appimage/koreader.appdata.xml
 
       - type: file
         url: https://raw.githubusercontent.com/koreader/koreader/master/resources/koreader.svg
@@ -105,7 +67,17 @@ modules:
           url: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
           pattern: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
 
-      - type: git
-        url: https://github.com/koreader/koreader-fonts
-        commit: 046976988aa33639d60d6ffd25c7a0ff50b72ac0
-        dest: fonts
+      - type: script
+        dest-filename: koreader.sh
+        commands:
+          - |
+            export FLATPAK=1
+            cd /app/koreader
+            RETURN_VALUE=85
+            while [ ${RETURN_VALUE} -eq 85 ]; do
+                ./reader.lua "$@"
+                RETURN_VALUE=$?
+                set --
+            done
+            exit ${RETURN_VALUE}
+
