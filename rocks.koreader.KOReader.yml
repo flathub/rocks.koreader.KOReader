@@ -24,12 +24,12 @@ modules:
     buildsystem: simple
     build-commands:
       - tar xf koreader.tar.xz
-      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader %u' usr/share/applications/koreader.desktop
+      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader %u' share/applications/koreader.desktop
       - install -Dm755 koreader.sh ${FLATPAK_DEST}/bin/koreader
       - install -Dm644 koreader.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 share/metainfo/koreader.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
       - install -Dm644 share/applications/koreader.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
-      - mv usr/lib/koreader ${FLATPAK_DEST}/koreader
+      - mv lib/koreader ${FLATPAK_DEST}/koreader
       - ln -s /run/host/user-fonts ${FLATPAK_DEST}/koreader/fonts/host
 
     sources:
