@@ -16,6 +16,7 @@ finish-args:
   - --filesystem=host
   - --filesystem=xdg-run/gvfs
   - --env=LD_LIBRARY_PATH=/app/lib
+  - --env=PATH=/app/bin:/usr/bin:/run/host/usr/bin:/run/host/bin
 
 modules:
   - shared-modules/SDL2/SDL2-with-libdecor.json
