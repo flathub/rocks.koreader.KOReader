@@ -34,8 +34,8 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2024.07/koreader-linux-x86_64-v2024.07.tar.xz
-        sha256: b0f0ed8dd48e0adbf3b663f034e08791de8945a7788c97de476accb9648cfab6
+        url: https://github.com/koreader/koreader/releases/download/v2024.11/koreader-linux-x86_64-v2024.11.tar.xz
+        sha256: a6f6ccb07e30f701a5e2d27bdb7f4d064b55c7169bee556dbd4da0090b8056e8
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
@@ -47,8 +47,8 @@ modules:
 
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2024.07/koreader-linux-aarch64-v2024.07.tar.xz
-        sha256: 0efde1a99d87daf33fc2dfbcedcaba997db8e3f8cdf48b113a9192aa2463d31b
+        url: https://github.com/koreader/koreader/releases/download/v2024.11/koreader-linux-aarch64-v2024.11.tar.xz
+        sha256: 993d5d961fa05438b347c06a826fabf49c9667751434aec5f99c8ed68ba4301b
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
