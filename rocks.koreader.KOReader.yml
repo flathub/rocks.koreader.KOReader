@@ -23,7 +23,8 @@ modules:
     buildsystem: simple
     build-commands:
       - tar xf koreader.tar.xz
-      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader %u' share/applications/koreader.desktop
+      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
+        %u' share/applications/koreader.desktop
       - install -Dm755 koreader.sh ${FLATPAK_DEST}/bin/koreader
       - install -Dm644 koreader.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
       - install -Dm644 share/metainfo/koreader.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
@@ -34,28 +35,28 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2024.11/koreader-linux-x86_64-v2024.11.tar.xz
-        sha256: a6f6ccb07e30f701a5e2d27bdb7f4d064b55c7169bee556dbd4da0090b8056e8
+        url: https://github.com/koreader/koreader/releases/download/v2025.04/koreader-linux-x86_64-v2025.04.tar.xz
+        sha256: f50d0089e21352ee4c9a28cfa1e629e4194d5d226ba991bfc89bc9f0eac1d8cf
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version + ".tar.xz")
-            | .browser_download_url
+          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version
+            + ".tar.xz") | .browser_download_url
           is-main-source: true
 
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2024.11/koreader-linux-aarch64-v2024.11.tar.xz
-        sha256: 993d5d961fa05438b347c06a826fabf49c9667751434aec5f99c8ed68ba4301b
+        url: https://github.com/koreader/koreader/releases/download/v2025.04/koreader-linux-aarch64-v2025.04.tar.xz
+        sha256: c4dd9a3f501b93e2e84df0d4f80bb7fbd01788ac9f63c9fba8c7d93d1a32ebf5
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name == "koreader-linux-aarch64-" + $version + ".tar.xz")
-            | .browser_download_url
+          url-query: .assets[] | select(.name == "koreader-linux-aarch64-" + $version
+            + ".tar.xz") | .browser_download_url
 
       - type: file
         url: https://raw.githubusercontent.com/koreader/koreader/master/resources/koreader.svg
