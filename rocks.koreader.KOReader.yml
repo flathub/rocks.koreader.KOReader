@@ -35,8 +35,8 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2025.10/koreader-linux-x86_64-v2025.10.tar.xz
-        sha256: b83fb359c4844fb9788216cf5e7d551048d465b445275f78762ada13a9cb3fd6
+        url: https://github.com/koreader/koreader/releases/download/v2026.03/koreader-linux-x86_64-v2026.03.tar.xz
+        sha256: 2fe4e5bb7973e30e3a3932f9370b549d6cc26272acaba471c35ebcaf81c741af
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
