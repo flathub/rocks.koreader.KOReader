@@ -30,6 +30,21 @@ modules:
       - sed -i -e 's/^export KO_MULTIUSER=1$/export FLATPAK=1/' /app/lib/koreader/koreader.sh
       # Make sure host fonts are honored.
       - ln -s /run/host/user-fonts /app/lib/koreader/fonts/host
+    cleanup:
+      # Prefer runtime libraries when possible.
+      - /lib/koreader/libs/libfreetype.so.*
+      - /lib/koreader/libs/libfribidi.so.*
+      - /lib/koreader/libs/libgif.so.*
+      - /lib/koreader/libs/libharfbuzz.so.*
+      - /lib/koreader/libs/libpng16.so.*
+      - /lib/koreader/libs/libSDL3.so.*
+      - /lib/koreader/libs/libsharpyuv.so.*
+      - /lib/koreader/libs/libsqlite3.so.*
+      - /lib/koreader/libs/libwebp.so.*
+      - /lib/koreader/libs/libwebpdemux.so.*
+      - /lib/koreader/libs/libxxhash.so.*
+      - /lib/koreader/libs/libz.so.*
+      - /lib/koreader/libs/libzstd.so.*
 
     sources:
       - type: file
