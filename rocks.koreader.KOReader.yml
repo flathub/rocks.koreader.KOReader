@@ -3,80 +3,54 @@ runtime: org.freedesktop.Platform
 runtime-version: '25.08'
 sdk: org.freedesktop.Sdk
 command: koreader
+rename-appdata-file: rocks.koreader.koreader.appdata.xml
+rename-desktop-file: rocks.koreader.koreader.desktop
+rename-icon: koreader
 separate-locales: false
 
 finish-args:
-  # For game controller access
+  # For game controller access.
   - --device=all
-
   - --share=ipc
   - --share=network
   - --socket=wayland
   - --socket=fallback-x11
   - --filesystem=host
   - --filesystem=xdg-run/gvfs
-  - --env=PATH=/app/bin:/usr/bin:/run/host/usr/bin:/run/host/bin
+  # For connectity check with `ping`.
+  - --env=PATH=/app/bin:/usr/bin:/run/host/bin
 
 modules:
   - name: koreader
     buildsystem: simple
     build-commands:
-      - tar xf koreader.tar.xz
-      - desktop-file-edit --set-icon ${FLATPAK_ID} --set-key Exec --set-value 'koreader
-        %u' share/applications/koreader.desktop
-      - install -Dm755 koreader.sh ${FLATPAK_DEST}/bin/koreader
-      - install -Dm644 koreader.svg ${FLATPAK_DEST}/share/icons/hicolor/scalable/apps/${FLATPAK_ID}.svg
-      - install -Dm644 share/metainfo/koreader.metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
-      - install -Dm644 share/applications/koreader.desktop ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
-      - mv lib/koreader ${FLATPAK_DEST}/koreader
-      - ln -s /run/host/user-fonts ${FLATPAK_DEST}/koreader/fonts/host
+      # Extract distribution.
+      - tar xvf koreader.tar.xz -C "${FLATPAK_DEST}"
+      # Fix launcher.
+      - sed -i -e 's/^export KO_MULTIUSER=1$/export FLATPAK=1/' /app/lib/koreader/koreader.sh
+      # Make sure host fonts are honored.
+      - ln -s /run/host/user-fonts /app/lib/koreader/fonts/host
 
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2025.10/koreader-linux-x86_64-v2025.10.tar.xz
-        sha256: b83fb359c4844fb9788216cf5e7d551048d465b445275f78762ada13a9cb3fd6
+        url: https://github.com/koreader/koreader/releases/download/v2026.03/koreader-linux-x86_64-v2026.03.tar.xz
+        sha256: 2fe4e5bb7973e30e3a3932f9370b549d6cc26272acaba471c35ebcaf81c741af
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version
-            + ".tar.xz") | .browser_download_url
+          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version + ".tar.xz") | .browser_download_url
           is-main-source: true
 
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2025.10/koreader-linux-aarch64-v2025.10.tar.xz
-        sha256: cd4a4ef458edae619e05f9575d20340fd80226c6e2039515c38b6a1bd701349e
+        url: https://github.com/koreader/koreader/releases/download/v2026.03/koreader-linux-arm64-v2026.03.tar.xz
+        sha256: f50304e54ca295860bbddb836873e8a43d677f65832586f707bacd9533152ad6
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name == "koreader-linux-aarch64-" + $version
-            + ".tar.xz") | .browser_download_url
-
-      - type: file
-        url: https://raw.githubusercontent.com/koreader/koreader/master/resources/koreader.svg
-        sha256: b285123a86736a5c317de1e9362c6a84fcebd7075c1f947586541d81f99ef29d
-        dest-filename: koreader.svg
-        x-checker-data:
-          type: rotating-url
-          url: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
-          pattern: https://github.com/koreader/koreader/raw/master/resources/koreader.svg
-
-      - type: script
-        dest-filename: koreader.sh
-        commands:
-          - |
-            export FLATPAK=1
-            cd /app/koreader
-            RETURN_VALUE=85
-            while [ ${RETURN_VALUE} -eq 85 ]; do
-                ./reader.lua "$@"
-                RETURN_VALUE=$?
-                set --
-            done
-            exit ${RETURN_VALUE}
-
+          url-query: .assets[] | select(.name == "koreader-linux-arm64-" + $version + ".tar.xz") | .browser_download_url
