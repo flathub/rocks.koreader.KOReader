@@ -49,23 +49,25 @@ modules:
     sources:
       - type: file
         only-arches: [x86_64]
-        url: https://github.com/koreader/koreader/releases/download/v2026.03/koreader-linux-x86_64-v2026.03.tar.xz
-        sha256: 2fe4e5bb7973e30e3a3932f9370b549d6cc26272acaba471c35ebcaf81c741af
+        url: https://github.com/koreader/koreader/releases/download/v2026.07/koreader-linux-x86_64-v2026.07.tar.xz
+        sha256: 3b1b8d6cce6e53ed0062a7a6a2e58c4f28e8cfe04a429ff79fe690bdcbc6b386
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version + ".tar.xz") | .browser_download_url
+          url-query: .assets[] | select(.name == "koreader-linux-x86_64-" + $version
+            + ".tar.xz") | .browser_download_url
           is-main-source: true
 
       - type: file
         only-arches: [aarch64]
-        url: https://github.com/koreader/koreader/releases/download/v2026.03/koreader-linux-arm64-v2026.03.tar.xz
-        sha256: f50304e54ca295860bbddb836873e8a43d677f65832586f707bacd9533152ad6
+        url: https://github.com/koreader/koreader/releases/download/v2026.07/koreader-linux-arm64-v2026.07.tar.xz
+        sha256: d73cf5578487e3efd615f5e606bf53b5f8c6284825da4a931e544c4bd2cac2bd
         dest-filename: koreader.tar.xz
         x-checker-data:
           type: json
           url: https://api.github.com/repos/koreader/koreader/releases/latest
           version-query: .tag_name
-          url-query: .assets[] | select(.name == "koreader-linux-arm64-" + $version + ".tar.xz") | .browser_download_url
+          url-query: .assets[] | select(.name == "koreader-linux-arm64-" + $version
+            + ".tar.xz") | .browser_download_url
